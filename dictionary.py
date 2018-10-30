@@ -6,7 +6,7 @@ import openpyxl
 
 #---- FUNCTIIONS ----#
 def menu():
-    """ main menu to choose from dict search or add new word """
+    # main menu to choose from dict search or add new word
     msg = "Üdv a szótáramban. Mit szeretnél csinálni?"
     choices = ["Szavak keresése", "Új szó hozzáadása", "Kilépés"]
     title = "Peti koreai-magyar szótára"
@@ -21,7 +21,7 @@ def menu():
 
 
 def word_input():
-    """ requests input of a word or part of a word """
+    # requests input of a word or part of a word
     title = "Peti koreai-magyar szótára"
     word = ""
     while word == "" :
@@ -33,8 +33,8 @@ def word_input():
 
 
 def word_lookup(kor, hun, word):
-    """ looks up if the word exists either in korean or in hungarian list, then
-    puts both words in a 2D list """
+    # looks up if the word exists either in korean or in hungarian list, then
+    # puts both words in a 2D list
     i = 0
     result = []
     # first: checking for exact match
@@ -42,17 +42,14 @@ def word_lookup(kor, hun, word):
         if word == hun[i]:
             key = hun[i]
             value = kor[i]
-            i += 1
             result.append([key, value])
 
         elif word == kor[i]:
             key = kor[i]
             value = hun[i]
-            i += 1
             result.append([key, value])
 
-        else:
-            i += 1
+        i += 1
 
     # second: checking for partial match AND if it's not already in the result list
     # this way exact match(es) will be on the begining of the results
@@ -61,24 +58,21 @@ def word_lookup(kor, hun, word):
         if word in hun[i] and not any(hun[i] in sublist for sublist in result):
             key = hun[i]
             value = kor[i]
-            i += 1
             result.append([key, value])
 
         elif word in kor[i] and not any(hun[i] in sublist for sublist in result):
             key = kor[i]
             value = hun[i]
-            i += 1
             result.append([key, value])
-          
-        else:
-            i += 1
+
+        i += 1
         
     return result
 
 
 def result_output(result):
-    """ creates a string of the 2D list, separated by '=' characters and with each word 
-    pair in new line, then makes the output in a textbox window """
+    # creates a string of the 2D list, separated by '=' characters and with each word 
+    # pair in new line, then makes the output in a textbox window 
     title = "Peti koreai-magyar szótára"
     i = 0
     str_result = ""
@@ -94,7 +88,7 @@ def result_output(result):
 
 
 def load_dict_column(book, sheet, column):
-    """ loads the given column of an excel sheet to a list """ 
+    # loads the given column of an excel sheet to a list 
     mylist = []
     for col in sheet[column]:
         mylist.append(col.value)
@@ -103,7 +97,7 @@ def load_dict_column(book, sheet, column):
 
 
 def new_word_input():
-    """ asks the new korean and hungarian words in a multenterbox """
+    # asks the new korean and hungarian words in a multenterbox 
     msg = "Kérlek add meg az új szavakat:"
     names = ["Koreaiul:", "Magyarul:"]
     title = "Peti koreai-magyar szótára"
@@ -114,7 +108,7 @@ def new_word_input():
 
 
 def add_new_word(book, sheet, values, filename):
-    """ opens the excel file and puts the new words into the first empty row """
+    # opens the excel file and puts the new words into the first empty row 
     sheet.append(values)
     book.save(filename)
 
